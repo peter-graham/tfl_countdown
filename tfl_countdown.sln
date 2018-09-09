@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "tfl_countdown", "tfl_countdown\tfl_countdown.pyproj", "{573B47EE-9783-4119-85FD-BA2373E9B670}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{573B47EE-9783-4119-85FD-BA2373E9B670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{573B47EE-9783-4119-85FD-BA2373E9B670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F910EA1-11F5-4D29-A13F-442EA9A5694C}
+	EndGlobalSection
+EndGlobal
