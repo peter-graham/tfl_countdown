@@ -1,8 +1,11 @@
 import urllib, json
 from datetime import datetime
+import time
 
 
 class TfLArrivals:
+    """Maintain a list of rail arrivals/departures using the TfL API.
+       Note: All timestamps are in UTC."""
     URL = "https://api.tfl.gov.uk/StopPoint/{}/arrivals"
 
     def __init__(self, stop):
@@ -36,10 +39,29 @@ class TfLArrivals:
 
         return result
 
+    def timestamps_by_destination(self):
+        """Returns a dict of departure times, each value is a list of times as str"""
+        result = dict()
+        for train in self.trains.values():
+            dest = train["destinationName"]
+
+            # populate destination dict
+            if dest not in result:
+                result[dest] = []
+
+            # populate arrival times
+            result[dest].append(train["expectedArrival"])
+
+        # sort each list of departures once populated
+        for departures in result.values():
+            departures.sort()
+
+        return result
+
     def tidy(self):
         to_tidy = []
         for id, train in self.trains.iteritems():
-            if self.convert_date(train["timeToLive"]) <= datetime.now():
+            if self.convert_date(train["timeToLive"]) <= datetime.utcnow():
                 to_tidy.append(id)
 
         for id in to_tidy:
@@ -55,10 +77,16 @@ class TfLArrivals:
     def convert_date(date):
         return datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
 
+# Test application
+destination = "Stratford (London) Rail Station"
 x = TfLArrivals("910GCSEAH")
-x.refresh()
-print x.arrivals_by_platform("Platform 1")
-print x.arrivals_by_destination()
-x.tidy()
 
-
+while(True):
+    x.refresh()
+    x.tidy()
+    times = x.arrivals_by_destination()
+    if destination in times:
+        print("Departures {}".format(map(lambda x: x//60, times)))
+    else:
+        print("No departures")
+    time.sleep(60)
